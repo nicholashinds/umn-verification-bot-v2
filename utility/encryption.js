@@ -13,7 +13,7 @@ const key = Buffer.from(process.env.ENCRYPTION_KEY, "hex");
 const alg = "aes-256-ctr";
 
 // email encryption function
-export function encryptEmail(plaintextEmail) {
+export function encryptText(plaintextEmail) {
   // initialization vector to guarantee the same plaintext is encrypted
   // differently each time
   const iv = crypto.randomBytes(16);
@@ -34,7 +34,7 @@ export function encryptEmail(plaintextEmail) {
 }
 
 // email decryption function
-export function decryptEmail(ciphertextEmail) {
+export function decryptText(ciphertextEmail) {
   // given an encrypted entry, split the initialization vector
   // and the encrypted email into two variables
   const [ivHex, encryptedHex] = ciphertextEmail.split(":");

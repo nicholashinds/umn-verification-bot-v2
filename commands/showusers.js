@@ -11,7 +11,7 @@ import {
 } from "discord.js";
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
-import { decryptEmail } from "../utility/encryption.js";
+import { decryptText } from "../utility/encryption.js";
 
 dotenv.config();
 
@@ -61,7 +61,7 @@ export async function execute(interaction) {
   const userLines = users.map((user) => {
     const member = members.get(user.discordId);
     const discordTag = member ? member.user.tag : "Unknown";
-    return `${discordTag} (${user.discordId}) - ${decryptEmail(user.email)}`;
+    return `${discordTag} (${user.discordId}) - ${decryptText(user.email)}`;
   });
 
   // setup pagination

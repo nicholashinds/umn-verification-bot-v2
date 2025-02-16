@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import dotenv from "dotenv";
-import { encryptEmail } from "../utility/encryption.js";
+import { encryptText } from "../utility/encryption.js";
 
 dotenv.config();
 
@@ -14,6 +14,7 @@ const prisma = new PrismaClient();
 // create cooldown for users to prevent spam
 const registerCooldown = new Map();
 
+const domain = process.env.ALLOWED_DOMAIN;
 const emailUsername = process.env.EMAIL_USERNAME;
 const emailPassword = process.env.EMAIL_APP_PASSWORD;
 
@@ -37,10 +38,10 @@ export async function execute(interaction) {
   // five minute cooldown to prevent spam
   const cooldownTime = 5 * 60 * 1000; // ms
 
-  // ensure only @umn.edu email addresses are used for verification
-  if (!email.endsWith("@umn.edu")) {
+  // ensure only approved email addresses are used for verification
+  if (!email.endsWith(domain)) {
     return interaction.reply({
-      content: "You must verify with a `@umn.edu` email!",
+      content: `You must verify with a \`${domain}\` email!`,
       flags: MessageFlags.Ephemeral,
     });
   }
@@ -78,7 +79,7 @@ export async function execute(interaction) {
   const verificationCode = crypto.randomInt(100000, 999999).toString();
 
   // encrypt user's email
-  const encryptedEmail = encryptEmail(email);
+  const encryptedEmail = encryptText(email);
 
   // update/insert the database with user info
   await prisma.verification.upsert({

@@ -16,6 +16,7 @@ dotenv.config();
 
 // define required .env variables
 const requiredEnvVars = [
+  "ALLOWED_DOMAIN",
   "DISCORD_BOT_TOKEN",
   "DISCORD_CLIENT_ID",
   "GUILD_ID",
@@ -45,10 +46,15 @@ if (missingVars.length > 0) {
 const botToken = process.env.DISCORD_BOT_TOKEN;
 const clientId = process.env.DISCORD_CLIENT_ID;
 const guildId = process.env.GUILD_ID;
+const commandChannelId = process.env.COMMANDS_CHANNEL_ID;
 
 // create a bot distance
 const client = new Client({
-  intents: [GatewayIntentBits.Guilds],
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+  ],
 });
 
 // create a REST API handler
@@ -139,6 +145,17 @@ client.once(Events.ClientReady, (readyClient) => {
     ],
     status: "dnd",
   });
+});
+
+// ensure command channel has no other messages
+client.on(Events.MessageCreate, async (message) => {
+  if (message.channel.id === commandChannelId) {
+    try {
+      await message.delete();
+    } catch (error) {
+      console.error(error);
+    }
+  }
 });
 
 // actually start the bot

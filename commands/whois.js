@@ -7,7 +7,7 @@ import {
 } from "discord.js";
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
-import { decryptEmail } from "../utility/encryption.js";
+import { decryptText } from "../utility/encryption.js";
 
 dotenv.config();
 
@@ -53,7 +53,7 @@ export async function execute(interaction) {
   }
 
   // retrieve decrypted email
-  const decryptedEmail = decryptEmail(userVerification.email);
+  const decryptedEmail = decryptText(userVerification.email);
 
   // create embed object with details about user
   const embed = new EmbedBuilder()

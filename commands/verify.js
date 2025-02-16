@@ -2,7 +2,7 @@
 import { SlashCommandBuilder, MessageFlags, EmbedBuilder } from "discord.js";
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
-import { decryptEmail } from "../utility/encryption.js";
+import { decryptText } from "../utility/encryption.js";
 
 dotenv.config();
 
@@ -96,7 +96,7 @@ export async function execute(interaction) {
           { name: "Discord Tag", value: `\`${discordTag}\``, inline: true },
           {
             name: "Email",
-            value: `\`${decryptEmail(userVerification.email)}\``,
+            value: `\`${decryptText(userVerification.email)}\``,
             inline: false,
           },
           {

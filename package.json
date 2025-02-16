@@ -1,7 +1,7 @@
 {
   "name": "umn-verification-bot-v2",
   "version": "1.0.0",
-  "description": "A bot created to verify UMN emails.",
+  "description": "A bot created to verify emails.",
   "main": "index.js",
   "keywords": [],
   "author": "Nick Hinds",
