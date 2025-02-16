@@ -1,18 +1,20 @@
+// define database connection
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
+// generate Prisma client for JavaScript
 generator client {
   provider = "prisma-client-js"
 }
 
+// define table
 model Verification {
-  id          Int      @id @default(autoincrement())
-  discordId   String   
-  email       String   
+  discordId   String   @id              // primary key
+  email       String                  
   code        String   
-  verified    Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  verified    Boolean  @default(false)  // initialize to false
+  createdAt   DateTime @default(now())  // initialize to current time
+  updatedAt   DateTime @updatedAt       // set new time on change
 }
