@@ -5,8 +5,7 @@ A small Discord bot that verifies the authenticity of users via email verificati
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/en/download/package-manager) (version 16 or later)
-- A Discord bot token and client ID
-- A guild (server) ID, verification role ID, and logging channel ID
+- A Discord account and server
 - A gmail email address and app password
 
 ## Getting Started
@@ -33,17 +32,20 @@ npm install
 - Create a `.env` file in the root of your project with the following content:
 
 ```
-DISCORD_BOT_TOKEN=
-DISCORD_CLIENT_ID=
-GUILD_ID=
-VERIFIED_ROLE_ID=
-LOGGING_CHANNEL_ID=
+ALLOWED_DOMAIN="@umn.edu"
+
+DISCORD_BOT_TOKEN=""
+DISCORD_CLIENT_ID=""
+GUILD_ID=""
+VERIFIED_ROLE_ID=""
+COMMANDS_CHANNEL_ID=""
+LOGGING_CHANNEL_ID=""
 
 DATABASE_URL="file:./dev.db"
-ENCRYPTION_KEY=
+ENCRYPTION_KEY=""
 
-EMAIL_USERNAME=
-EMAIL_APP_PASSWORD=
+EMAIL_USERNAME=""
+EMAIL_APP_PASSWORD=""
 ```
 
 ### 4. Create Encryption Key (DO NOT SHARE)
@@ -57,13 +59,13 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ### 5. Get Your Discord Bot Token
 
 1. Go to the [Discord Developer Portal](https://discord.com/developers/applications).
-2. Under **Bot** settings, generate and copy the **Token** inside the `.env` file as `DISCORD_BOT_TOKEN`.
-3. Create a new application and under **OAuth2** > **OAuth2 URL Generator** settings, select the `bot` scope and then the `Manage Roles`, `View Channels`, and `Send Messages`, permissions. Then, copy and paste the provided URL into a browser to invite the bot to your server.
+2. Under **Bot** settings, reset and copy the **Token** inside the `.env` file as `DISCORD_BOT_TOKEN`.
+3. Additionally, enable the **Message Content Intent** option in the same page.
 
 ### 5. Get Your Discord Bot Client ID
 
-1. Once again, go to the [Discord Developer Portal](https://discord.com/developers/applications).
-2. Under **OAuth2** settings, copy the **Client ID** inside the `.env` as `DISCORD_CLIENT_ID`.
+1. Now, navigate to the **OAuth2** settings and copy the **Client ID** inside the `.env` as `DISCORD_CLIENT_ID`.
+2. Under the same page, we can generate the bot's invitation link by heading to the **OAuth2 URL Generate**, selecting the `bot` scope, and then selecting the `Manage Roles`, `View Channels`, `Send Messages`, abd `Manage Messages` permissions. Then, copy and paste the provided URL into a browser to invite the bot to your server.
 
 ### 6. Discord Guild ID
 
@@ -80,6 +82,8 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
 1. Right-click the channel where you want loggings notifications and select **Copy ID**.
 2. Paste the copied ID inside the `.env` file as `LOGGING_CHANNEL_ID`.
+3. Right-click the channel where you want verification commands to be sent and select **Copy ID**.
+4. Paste the copied ID inside the `.env` file as `COMMANDS_CHANNEL_ID`.
 
 ### 9. Email Username and Password
 
@@ -106,4 +110,4 @@ npm start
 
 ## Troubleshooting
 
-- **Bot Not Responding**: Ensure the bot has the correct permissiosn to post and manage messages.
+- **Bot Not Responding**: Ensure the bot has the correct permissiosn to post and manage messages. This includes moving the bot's role above the verification role in the role list.
