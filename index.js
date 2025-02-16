@@ -24,28 +24,20 @@ const rest = new REST().setToken(botToken);
 
 client.commands = new Collection();
 const commands = [];
-// REMOVE LATER (filter)
-const commandFiles = fs
-  .readdirSync("./commands")
-  .filter((file) => file.endsWith(".js"));
+const commandFiles = fs.readdirSync("./commands");
 
 for (const file of commandFiles) {
   const filePath = `./commands/${file}`;
 
-  // REMOVE LATER (if else)
   import(filePath)
     .then((command) => {
       if (command && "data" in command && "execute" in command) {
         client.commands.set(command.data.name, command);
         commands.push(command.data.toJSON());
-      } else {
-        console.warn(
-          `[WARNING] The command at ${filePath} is missing required properties.`
-        );
       }
     })
     .catch((error) => {
-      console.error(`[ERROR] Failed to load command at ${filePath}:`, error);
+      console.error(`Failed to load command at ${filePath}:`, error);
     });
 }
 
