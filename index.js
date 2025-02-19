@@ -6,6 +6,7 @@ import {
   Events,
   GatewayIntentBits,
   MessageFlags,
+  PermissionsBitField,
   REST,
   Routes,
 } from "discord.js";
