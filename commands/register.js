@@ -130,8 +130,7 @@ async function sendVerificationEmail(email, code) {
     from: `"Discord Verification Bot" <${emailUsername}>`,
     to: email,
     subject: "Discord Verification Code",
-    text: `Your verification code is: ${code}. Use \`/verify\` to submit the code.\n\n
-    Do not share your verification code with anyone other than the verification bot.\n\n
+    text: `Your verification code is: ${code}. Use '/verify' in the Discord server to submit the code.\n\n
     This is an automated email. Please do not reply.`,
   };
 

@@ -151,7 +151,12 @@ client.once(Events.ClientReady, (readyClient) => {
 client.on(Events.MessageCreate, async (message) => {
   if (message.channel.id === commandChannelId) {
     try {
-      await message.delete();
+      if (
+        // do not delete messages from admins
+        !message.member.permissions.has(PermissionsBitField.Flags.Administrator)
+      ) {
+        await message.delete();
+      }
     } catch (error) {
       console.error(error);
     }
